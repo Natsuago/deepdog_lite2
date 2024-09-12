@@ -1,0 +1,11 @@
+# imu_visualization.rviz
+# RViz configuration file for IMU visualization
+
+VisualizationManager:
+  FixedFrame: /map
+
+Imu:
+  Topic: /imu
+
+Axes:
+  Axes: /imu

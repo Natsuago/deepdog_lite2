@@ -1,0 +1,20 @@
+* 机械狗导航控制包(睿抗比赛)
+*** 使用
+***** 启动定位节点
+*记点和多点导航都需要启动定位节点*
+#+begin_src bash
+  roslaunch control location.launch
+#+end_src
+***** 记点
+#+begin_src bash
+  roscd control
+  python3 get_now_point.py
+#+end_src
+记下来的点就在now_point.py文件中
+***** 启动多点导航程序
+首先启动定位节点
+#+begin_src bash
+  roscd control
+  cd scripts
+  python3 multi_goal.py
+#+end_src
