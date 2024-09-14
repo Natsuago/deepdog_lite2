@@ -1,85 +1,81 @@
----
+* 机械狗导航控制包
 
-# 机械狗导航控制包
-
-## 项目简介
+** 项目简介
 
 本项目基于ROS（机器人操作系统）平台，旨在控制四足机器人（机械狗）在复杂环境下进行多目标路径规划和自主导航。该项目通过整合里程计（Odometry）和惯性测量单元（IMU）数据，使用扩展卡尔曼滤波（EKF）算法，确保机器人能够精确定位和导航。
 
-## 系统要求
+** 系统要求
 
-- **操作系统**：Ubuntu 18.04
-- **ROS版本**：Melodic Morenia
-- **机器人平台**：绝影Lite系列
-- **编程语言**：Python, C++
-- **算法**：扩展卡尔曼滤波（EKF）
+- **操作系统**: Ubuntu 18.04
+- **ROS版本**: Melodic Morenia
+- **机器人平台**: 绝影Lite系列
+- **编程语言**: Python, C++
+- **算法**: 扩展卡尔曼滤波（EKF）
 
-## 安装与配置
+** 安装与配置
 
-### I) 编译ROS工作空间
+*** I) 编译ROS工作空间
 
 1. 打开终端，进入工作空间根目录：
-   ```bash
+   #+begin_src bash
    cd ~/navigation_rui_ws
-   ```
+   #+end_src
 
 2. 编译ROS工作空间，确保所有依赖库和节点正确编译：
-   ```bash
+   #+begin_src bash
    catkin_make
-   ```
+   #+end_src
 
-### II) 配置环境变量
+*** II) 配置环境变量
 
 1. 将工作空间的环境配置脚本添加至系统环境变量中，以确保每次启动终端时能够自动加载工作空间的开发环境：
-   ```bash
+   #+begin_src bash
    echo "source ~/navigation_rui_ws/devel/setup.bash" >> ~/.bashrc
    source ~/.bashrc
-   ```
+   #+end_src
 
-## 使用说明
+** 使用说明
 
-### III) 启动定位节点
+*** III) 启动定位节点
 
 该项目基于腿部里程计和IMU的扩展卡尔曼滤波算法，实现机器狗的自主定位和导航功能。首先需要启动定位节点来初始化所有必要的传感器和控制模块。
 
-```bash
-roslaunch control location.launch
-```
+   #+begin_src bash
+   roslaunch control location.launch
+   #+end_src
 
-### A. 目标点的选取及记忆
+*** A. 目标点的选取及记忆
 
 1. 进入项目的脚本目录：
-   ```bash
+   #+begin_src bash
    cd ~/navigation_rui_ws/src/control/scripts
-   ```
+   #+end_src
 
 2. 运行用于记录当前目标点的脚本：
-   ```bash
+   #+begin_src bash
    python get_now_point.py
-   ```
+   #+end_src
 
 3. 通过手机APP控制机器狗移动至目标位置。当机器人到达指定位置后，按下键盘上的 `f` 键（也可以在代码中自行修改为其他按键），将当前位置保存为路径中的一个目标点，用于后续的多目标导航任务。
 
-### B. 启动多目标导航程序
+*** B. 启动多目标导航程序
 
 1. 进入多目标导航脚本所在的目录：
-   ```bash
+   #+begin_src bash
    cd ~/navigation_rui_ws/src/control/scripts
-   ```
+   #+end_src
 
 2. 启动多目标导航脚本，控制机器狗依次移动到预先记录的目标点：
-   ```bash
+   #+begin_src bash
    python multi_goal.py
-   ```
+   #+end_src
 
 根据任务需求，你还可以对脚本进行修改和扩展，以实现复杂的功能，如动态避障和路径优化。
 
-## 贡献指南
+** 贡献指南
 
 如果你想为该项目贡献代码，请遵循以下步骤：
 
 1. Fork 本项目并创建一个新分支。
 2. 在新分支中做出修改。
 3. 提交 Pull Request。
-
----
