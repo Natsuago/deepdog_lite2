@@ -18,8 +18,8 @@
 
 1. 打开终端，进入工作空间根目录：
    #+begin_src bash
-   cd ~/navigation_rui_ws
-   #+end_src
+   cd ~/navigation_rui_ws#+end_src
+   
 
 2. 编译ROS工作空间，确保所有依赖库和节点正确编译：
    #+begin_src bash
