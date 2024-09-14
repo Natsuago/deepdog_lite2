@@ -103,8 +103,8 @@ class MultiGoals:
         self.zero_point = np.array([[0.0, 0.0, 0.0, 0.0, 0.0, 0.02629456914795107, 0.9996542380409956]])  # 原点坐标
         self.stop_point = load_data("stop_point.csv")  # 加载停止点
         self.start_point = load_data("start_point.csv")  # 加载起始点
-        self.cone2_back_point = load_data("cone2.csv")  # 第二个锥桶位置
-        self.cone3_back_point = load_data("cone3.csv")  # 第三个锥桶位置
+        self.cone2_back_point = load_data("cone2.csv")  # 第二个位置
+        self.cone3_back_point = load_data("cone3.csv")  # 第三个位置
         self.corner_point = load_data("corner.csv")  # 拐角点位置
         self.last_point = load_data("last.csv")  # 最终点位置
 
@@ -180,7 +180,7 @@ class MultiGoals:
 
         # 判断是否接近起点
         if not dist is None and dist < 0.1 and not self.check_start:
-            self.pub_status.publish("now-cone1")  # 发布到达第一个锥桶的状态
+            self.pub_status.publish("now-cone1")  # 发布到达第一个位置的状态
             self.check_start = False
 
         # 判断是否接近停止点
@@ -228,7 +228,7 @@ class MultiGoals:
 
     # 计算下一个目标点的相对位置，基于当前的位置和传感器信息
     def calc_next_point(self, cone_points, angle_q=None):
-        temp = cone_points.copy()  # 复制锥桶点坐标
+        temp = cone_points.copy()  # 复制位置点坐标
 
         # 调整每个点的坐标，使其相对于当前位置
         for i in range(np.size(temp, 0)):
@@ -244,15 +244,15 @@ class MultiGoals:
 
         return temp  # 返回调整后的目标点
 
-    # 锥桶2任务完成后的回调函数
+    # 位置2任务完成后的回调函数
     def finish_cone2(self):
         time.sleep(self.finish_run_time)  # 延迟
-        self.pub_status.publish("finish-cone2")  # 发布完成锥桶2任务的状态
+        self.pub_status.publish("finish-cone2")  # 发布完成位置2任务的状态
 
-    # 锥桶3任务完成后的回调函数
+    # 位置3任务完成后的回调函数
     def finish_cone3(self):
         time.sleep(self.finish_run_time)  # 延迟
-        self.pub_status.publish("finish-cone3")  # 发布完成锥桶3任务的状态
+        self.pub_status.publish("finish-cone3")  # 发布完成位置3任务的状态
 
     # 拐角任务完成后的回调函数
     def finish_corner(self):
@@ -270,12 +270,12 @@ class MultiGoals:
 
         # 根据收到的指令，切换至不同的导航任务
         if data.data == "cone2":
-            self.change_status(self.calc_next_point(self.cone2_back_point))  # 切换到锥桶2任务
+            self.change_status(self.calc_next_point(self.cone2_back_point))  # 切换到位置2任务
             self.pub_status.publish("start-cone2")
             self.run_finish_lambda = self.finish_cone2  # 任务完成后的回调设置为finish_cone2
 
         if data.data == "cone3":
-            self.change_status(self.calc_next_point(self.cone3_back_point))  # 切换到锥桶3任务
+            self.change_status(self.calc_next_point(self.cone3_back_point))  # 切换到位置3任务
             self.pub_status.publish("start-cone3")
             self.run_finish_lambda = self.finish_cone3  # 任务完成后的回调设置为finish_cone3
 
